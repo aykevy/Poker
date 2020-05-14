@@ -25,6 +25,3 @@ class Deck
     end
 
 end
-
-d = Deck.new
-d.print_deck
