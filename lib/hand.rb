@@ -1,9 +1,16 @@
+require_relative "card"
+
 class Hand
 
     attr_accessor :cards
 
     def initialize
         @cards = Array.new
+    end
+
+    #A enumerable to check if any of the cards fit the condition.
+    def any?(&prc)
+        @cards.any? { | card | prc.call(card) }
     end
 
     #Converts the cards you own into a hash.
