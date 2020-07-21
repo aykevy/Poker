@@ -13,6 +13,16 @@ class Hand
         @cards.any? { | card | prc.call(card) }
     end
 
+    #A enumerable to select the items in cards based on a given proc.
+    def select(&prc)
+        @cards.select { | card | prc.call(card) }
+    end
+
+    #Prints the cards in the hand.
+    def print_cards
+        @cards.each { | card | puts "#{card.suit}, #{card.rank}" }
+    end
+    
     #Converts the cards you own into a hash.
     def hand_hash
         h = Hash.new { | hash, k | hash[k] = Array.new }

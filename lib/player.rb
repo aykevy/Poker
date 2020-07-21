@@ -37,7 +37,7 @@ class Player
                     end
                 end
             end
-            
+
             if to_discard.length == amount
                 puts "Success! The following will be discarded: #{to_discard}"
                 return to_discard
@@ -47,17 +47,20 @@ class Player
     end
 
     def discard(arr)
-        new_set = @hand.select { | card | arr.include?(card.rank) }
-        @hand = new_set
+        new_set = @hand.select { | card | !arr.include?([card.suit, card.rank]) }
+        @hand.cards = new_set
     end
 
     def fold
+        @pot -= 0
     end
 
-    def see
+    def see(previous_bet)
+        @pot -= previous_bet
     end
 
-    def raise
+    def raise(your_bet)
+        @pot -= your_bet
     end
 
     def action
@@ -69,11 +72,9 @@ end
 if __FILE__ == $PROGRAM_NAME
     h = Hand.new
     h.cards = [Card.new("♠", 7), Card.new("♥", 7), Card.new("♠", 8), Card.new("♥", 2), Card.new("♠", 3)]
-
     my_player = Player.new
     my_player.hand = h
-    my_player.discard_which_prompt(my_player.discard_amount_prompt)
-
-    
-
+    result = my_player.discard_which_prompt(my_player.discard_amount_prompt)
+    my_player.discard(result)
+    my_player.hand.print_cards
 end

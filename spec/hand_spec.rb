@@ -4,6 +4,7 @@ require "card"
 describe Hand do
 
     subject(:hand) { Hand.new }
+    subject(:hand2) { Hand.new }
 
     describe "#one_pair?" do
         it "checks if theres a pair of cards" do
@@ -65,6 +66,14 @@ describe Hand do
         it "checks if all five cards are of the same suit and ranks are 1, 10, 11, 12, 13" do
             hand.cards = [Card.new("♠", 1), Card.new("♠", 10), Card.new("♠", 11), Card.new("♠", 12), Card.new("♠", 13)]
             expect(hand.royal_flush?(hand.hand_hash)).to eq(true)
+        end
+    end
+
+    describe "#hand_score" do
+        it "checks if the results win" do
+            hand.cards = [Card.new("♠", 1), Card.new("♠", 10), Card.new("♠", 11), Card.new("♠", 12), Card.new("♠", 13)]
+            hand2.cards = [Card.new("♠", 7), Card.new("♠", 8), Card.new("♠", 6), Card.new("♠", 5), Card.new("♠", 4)]
+            expect(hand.hand_score < hand2.hand_score).to eq(true)
         end
     end
 
